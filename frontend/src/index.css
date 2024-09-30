@@ -8,4 +8,15 @@
     .link{
         @apply text-gray-600 hover:text-black hover:bg-gray-300 p-3 px-4 block opacity-75;
     }
+    .input-box {
+        @apply w-[100%] rounded-md outline-blue-600 p-4 bg-[#F3F3F3] pl-12 border border-[#F3F3F3] focus:bg-transparent placeholder:text-black;
+    }
+
+    input:disabled, input:disabled ~ .input-icon{
+        @apply opacity-50;
+    }
+
+    .input-icon{
+        @apply absolute left-4 top-1/2 -translate-y-1/2;
+    }
 }

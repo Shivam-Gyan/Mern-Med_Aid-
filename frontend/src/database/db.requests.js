@@ -14,7 +14,7 @@ class requestService {
             return response.data;
 
         } catch (error) {
-            return error.response.data;
+            throw error.response.data;
         }
     }
     register = async (data) => {
@@ -59,7 +59,7 @@ class requestService {
             return response.data;
 
         } catch (error) {
-            return error.response.data;
+            throw error.response.data;
         }
     }
 

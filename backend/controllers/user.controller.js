@@ -29,33 +29,32 @@ export const registerUser = AsyncErrorHandlder(async (req, res, next) => {
 
 export const login = AsyncErrorHandlder(async (req, res, next) => {
 
-    const { email, name, confirmPassword, password, role } = req.body;
+    const { email, confirmPassword, password, role } = req.body;
+    
 
-    if (!(email || name) || !confirmPassword || !password || !role) {
+    if (!email  || !password || !role) {
         return next(new ErrorHandler("please fill full form !", 400))
     }
 
-    if (password !== confirmPassword) {
-        return next(new ErrorHandler("password and confirm password not match", 400))
-    }
+    // if (password !== confirmPassword) {
+    //     return next(new ErrorHandler("password and confirm password not match", 400))
+    // }
 
 
-    let user = await userModel.findOne({
-        $or: [{ email }, { name }]
-      }).select("+password");
+    let user = await userModel.findOne({ email }).select("+password");
 
     if (!user) {
         return next(new ErrorHandler("Invalid credentials", 404))
     }
 
 
-    const isPasswordMatch = await user.comparePassword(confirmPassword)
+    const isPasswordMatch = await user.comparePassword(password)
 
     if (!isPasswordMatch) {
         return next(new ErrorHandler("Invalid credentials", 404))
     }
     if (role !== user.role) {
-        return next(new ErrorHandler("User with this role not found", 404))
+        return next(new ErrorHandler(`${role} not found`, 404))
 
     }
 

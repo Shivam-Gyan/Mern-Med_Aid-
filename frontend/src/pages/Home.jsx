@@ -5,7 +5,6 @@ import AnimationWrapper from '../components/AnimationWrapper'
 
 const Home = () => {
 
-
   return (
     <AnimationWrapper>
       <section>

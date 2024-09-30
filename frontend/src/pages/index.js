@@ -1,10 +1,10 @@
 import Home from "./Home.jsx";
-import Login from "./Login.jsx";
+import AuthForm from "./AuthForm.jsx";
 import Signup from "./Signup.jsx";
 
 export{
     Home,
-    Login,
+    AuthForm,
     Signup,
     
 }

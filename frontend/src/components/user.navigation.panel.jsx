@@ -4,16 +4,25 @@ import { UserContext } from "../App";
 import { toast } from 'react-hot-toast'
 import AnimationWrapper from "./AnimationWrapper";
 import { menu } from "./Navbar";
+import { RequestService } from "../database/db.requests";
 
 
 
 const UserNavigationPanel = () => {
 
-    const { user: { _id, name } } = useContext(UserContext)
+    const { user: { _id, name } ,setUser} = useContext(UserContext)
 
 
     const signOutUser = () => {
-        toast.success("logout successfully")
+
+        RequestService.LogoutUser().then((data)=>{
+            
+            setUser({email:null})
+            toast.success(data.message)
+
+        }).catch(err=>{
+            toast.error(err.message)
+        })
     }
 
     return (
