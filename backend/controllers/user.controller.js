@@ -86,15 +86,15 @@ export const adminRegister = AsyncErrorHandlder(async (req, res, next) => {
 })
 
 
-export const getAllDoctors = AsyncErrorHandlder(async (req, res, next) => {
-    const doctors = await userModel.find({ role: "Doctor" })
+// export const getAllDoctors = AsyncErrorHandlder(async (req, res, next) => {
+//     const doctors = await userModel.find({ role: "Doctor" })
 
-    res.status(200).json({
-        sucess: true,
-        message: "fetched successfully",
-        doctors
-    })
-})
+//     res.status(200).json({
+//         sucess: true,
+//         message: "fetched successfully",
+//         doctors
+//     })
+// })
 
 export const getUserDetails = AsyncErrorHandlder(async (req, res, next) => {
     const user = req.user;
@@ -130,49 +130,54 @@ export const logoutPatient = AsyncErrorHandlder(async (req, res, next) => {
 })
 
 
-export const registerDoc = AsyncErrorHandlder(async (req, res, next) => {
+export const CloudinaryImageURl=AsyncErrorHandlder(async(req,res,next)=>{
     if (!req.files || Object.keys(req.files).length == 0) {
-        return next(new ErrorHandler("doctor avatar is Required", 400));
+        return next(new ErrorHandler("Please uplaod and image", 404));
     }
-    const { avatar } = req.files;
+    const { image } = req.files;
+    let cloudinaryResponse;
 
-    console.log(avatar)
-    const allowedFormat = ["image/png", "image/jpeg", "image/webp"]
-    console.log(avatar)
-    if (!allowedFormat.includes(avatar.mimetype)) {
-        return next(new ErrorHandler("Image format not supported", 400))
-    }
-
-    const { name, email, phone, password, gender, doctorDep } = req.body;
-
-    if (!name || !email || !phone || !password ||!gender || !doctorDep) {
-        return next(new ErrorHandler("please fill full form", 400))
-    }
-    const isRegistered = await userModel.findOne({ email })
-    if (isRegistered) {
-        return next(new ErrorHandler(`user already registed as ${isRegistered.role}`, 400))
+    try {
+        cloudinaryResponse = await cloudinary.uploader.upload(
+            image.tempFilePath
+        );
+    } catch (error) {
+        return next(new ErrorHandler("something went wrong while uploading banner ", 500))
     }
 
-    const cloudinaryResponse = await cloudinary.uploader.upload(
-        avatar.tempFilePath
-    );
-    if (!cloudinaryResponse || cloudinaryResponse.error) {
-        console.error("Cloudinary Error :: ", cloudinaryResponse.error || "Unknown cludinary error")
-    }
 
-    const doctor=await userModel.create({
-        name, email, phone, password,role:"Doctor" ,gender, doctorDep,avatar:{
-            public_id:cloudinaryResponse.public_id,
-            url:cloudinaryResponse.secure_url
-        }
+    return res.status(200).json({
+        success: true,
+        message: "upload successfull",
+        image_url: cloudinaryResponse.secure_url
     })
-
-    res.status(200).json({
-        success:true,
-        message:"new doctor registered",
-        doctor
-    })
-
-
-
 })
+
+
+
+
+// export const registerDoc = AsyncErrorHandlder(async (req, res, next) => {
+  
+//     const { name, email, phone, password, gender, doctorDep } = req.body;
+
+//     if (!name || !email || !phone || !password ||!gender || !doctorDep) {
+//         return next(new ErrorHandler("please fill full form", 400))
+//     }
+//     const isRegistered = await userModel.findOne({ email })
+//     if (isRegistered) {
+//         return next(new ErrorHandler(`user already registed as ${isRegistered.role}`, 400))
+//     }
+
+//     // const doctor=await userModel.create({
+//     //     name, email, phone, password,role:"Doctor" ,gender, doctorDep,avatar
+//     // })
+
+//     res.status(200).json({
+//         success:true,
+//         message:"new doctor registered",
+//         doctor
+//     })
+
+
+
+// })
