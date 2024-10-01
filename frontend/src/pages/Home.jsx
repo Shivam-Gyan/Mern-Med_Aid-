@@ -1,5 +1,5 @@
 import React from 'react'
-import { HeroSection, SearchDoctor, Image, AppointmentInfo } from '../components'
+import { HeroSection, SearchDoctor, Image, AppointmentInfo, ShortDoctorCard } from '../components'
 import { Link } from 'react-router-dom'
 import AnimationWrapper from '../components/AnimationWrapper'
 
@@ -15,10 +15,23 @@ const Home = () => {
         <SearchDoctor />
 
         {/* popular doctors  */}
-{/* 
+
         <div>
           popular doctors doctors
-        </div> */}
+
+          {/* <div className='flex items-center md:justify-center flex-col flex-wrap md:flex-row gap-4 '> */}
+          <div className='grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3'>
+          {
+            [1,2,3,4,5,6,7,8].map((_,i)=>{
+              return (
+                <AnimationWrapper key={i}>
+                  <ShortDoctorCard/>
+                </AnimationWrapper>
+              )
+            })
+          }
+          </div>
+        </div>
 
 
         {/* recents doctors */}

@@ -4,6 +4,7 @@ import HeroSection from "./HeroSection.jsx";
 import SearchDoctor from "./SearchDoctor.jsx";
 import Image from "./Image.jsx";
 import AppointmentInfo from "./heroSection2.jsx";
+import ShortDoctorCard from "./doctor.card.jsx";
 
 
 export {
@@ -13,5 +14,6 @@ export {
     SearchDoctor,
     Image,
     AppointmentInfo,
+    ShortDoctorCard,
     
 }

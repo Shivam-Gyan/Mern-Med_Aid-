@@ -5,7 +5,7 @@ class requestService {
     login = async (data) => {
 
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/user/login',
+            const response = await axios.post(import.meta.env.VITE_SERVER_DOMAIN+'/user/login',
                 data, {
                 withCredentials: true,
                 headers: { "Content-Type": "application/json" }
@@ -20,7 +20,7 @@ class requestService {
     register = async (data) => {
 
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/user/register',
+            const response = await axios.post(import.meta.env.VITE_SERVER_DOMAIN+'/user/register',
                 data, {
                 withCredentials: true,
                 headers: { "Content-Type": "application/json" }
@@ -35,7 +35,7 @@ class requestService {
     userDetails = async () => {
 
         try {
-            const response = await axios.get('http://localhost:8000/api/v1/user/patient/details',
+            const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN+'/user/patient/details',
                 {
                     withCredentials: true,
                     headers: { "Content-Type": "application/json" }
@@ -50,7 +50,7 @@ class requestService {
     LogoutUser = async () => {
 
         try {
-            const response = await axios.get('http://localhost:8000/api/v1/user/patient/logout',
+            const response = await axios.get(import.meta.env.VITE_SERVER_DOMAIN+'/user/patient/logout',
                 {
                     withCredentials: true,
                     headers: { "Content-Type": "application/json" }
